@@ -40,7 +40,11 @@ public class Firestore {
     }
     
     deinit {
-        try? self.eventLoopGroup.syncShutdownGracefully()
+        self.eventLoopGroup.shutdownGracefully() { error in
+            if let error = error {
+                print("Error", error)
+            }
+        }
     }
     
     /**
